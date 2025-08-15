@@ -1,4 +1,3 @@
-//backend/models/Maintenance.js
 const mongoose = require('mongoose');
 
 const maintenanceSchema = mongoose.Schema(
@@ -6,7 +5,7 @@ const maintenanceSchema = mongoose.Schema(
 		asset: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: [true, 'Please specify the asset for maintenance'],
-			ref: 'Asset', // References the Asset model
+			ref: 'Asset', 
 		},
 		maintenanceDate: {
 			type: Date,
@@ -42,7 +41,7 @@ const maintenanceSchema = mongoose.Schema(
 			trim: true,
 			maxlength: 500,
 		},
-		// Who recorded this maintenance
+		
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,

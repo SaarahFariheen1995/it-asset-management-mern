@@ -1,4 +1,3 @@
-//backend/models/Asset.js
 const mongoose = require('mongoose');
 
 const assetSchema = mongoose.Schema(
@@ -25,7 +24,7 @@ const assetSchema = mongoose.Schema(
 		},
 		warrantyEndDate: {
 			type: Date,
-			required: false, // Not all assets have warranties
+			required: false,
 		},
 		status: {
 			type: String,
@@ -39,15 +38,15 @@ const assetSchema = mongoose.Schema(
 		},
 		assignedTo: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User', // References the User model
-			default: null, // Asset might not be assigned
+			ref: 'User', 
+			default: null,
 		},
 		notes: {
 			type: String,
 			trim: true,
 			maxlength: 500,
 		},
-		// Who created this asset record
+		
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,
@@ -55,7 +54,7 @@ const assetSchema = mongoose.Schema(
 		},
 	},
 	{
-		timestamps: true, // Adds createdAt and updatedAt fields
+		timestamps: true, 
 	}
 );
 

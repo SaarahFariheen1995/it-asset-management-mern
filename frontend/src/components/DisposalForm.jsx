@@ -1,4 +1,3 @@
-// frontend/src/components/DisposalForm.jsx
 import React, { useState, useEffect } from 'react';
 
 const DisposalForm = ({ disposal, assets, onSubmit, onCancel }) => {
@@ -20,7 +19,6 @@ const DisposalForm = ({ disposal, assets, onSubmit, onCancel }) => {
 				notes: disposal.notes || '',
 			});
 		} else {
-			// Reset form for new disposal
 			setFormData({
 				asset: '', disposalDate: '', method: 'Recycled', reason: '', notes: '',
 			});

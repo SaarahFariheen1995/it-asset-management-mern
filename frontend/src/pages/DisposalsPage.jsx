@@ -1,8 +1,7 @@
-// frontend/src/pages/DisposalsPage.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { useAuth } from '../context/AuthContext';
 import disposalService from '../services/disposalService';
-import assetService from '../services/assetService'; // To get list of assets for dropdown
+import assetService from '../services/assetService'; 
 import DisposalForm from '../components/DisposalForm';
 import DisposalList from '../components/DisposalList';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +10,7 @@ const DisposalsPage = () => {
 	const { user } = useAuth();
 	const navigate = useNavigate();
 	const [disposals, setDisposals] = useState([]);
-	const [assets, setAssets] = useState([]); // For asset selection in form
+	const [assets, setAssets] = useState([]); 
 	const [editingDisposal, setEditingDisposal] = useState(null);
 	const [showForm, setShowForm] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -42,13 +41,10 @@ const DisposalsPage = () => {
 
 	const fetchAssetsForDropdown = async () => {
 		try {
-			// Fetch all assets, then filter out those already disposed if needed, or allow re-disposal records.
-			// For simplicity, we'll fetch all and let the user select.
 			const allAssets = await assetService.getAssets(user.token);
 			setAssets(allAssets);
 		} catch (err) {
 			console.error('Failed to fetch assets for disposal dropdown:', err);
-			// Not critical to stop page load, but log the error
 		}
 	};
 
@@ -66,7 +62,7 @@ const DisposalsPage = () => {
 		if (window.confirm('Are you sure you want to delete this disposal record?')) {
 			try {
 				await disposalService.deleteDisposal(id, user.token);
-				fetchDisposals(); // Refresh list
+				fetchDisposals();
 			} catch (err) {
 				console.error('Failed to delete disposal record:', err);
 				setError('Failed to delete disposal record. Please try again.');
@@ -83,7 +79,7 @@ const DisposalsPage = () => {
 			}
 			setShowForm(false);
 			setEditingDisposal(null);
-			fetchDisposals(); // Refresh list
+			fetchDisposals();
 		} catch (err) {
 			console.error('Failed to save disposal record:', err);
 			setError(`Failed to save disposal record: ${err.response?.data?.message || err.message}`);
@@ -103,7 +99,7 @@ const DisposalsPage = () => {
 			{showForm && (
 				<DisposalForm
 					disposal={editingDisposal}
-					assets={assets} // Pass assets to the form
+					assets={assets}
 					onSubmit={handleFormSubmit}
 					onCancel={() => setShowForm(false)}
 				/>

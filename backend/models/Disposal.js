@@ -1,4 +1,3 @@
-//backend/models/Disposal.js
 const mongoose = require('mongoose');
 
 const disposalSchema = mongoose.Schema(
@@ -6,7 +5,7 @@ const disposalSchema = mongoose.Schema(
 		asset: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: [true, 'Please specify the asset being disposed'],
-			ref: 'Asset', // References the Asset model
+			ref: 'Asset',
 		},
 		disposalDate: {
 			type: Date,
@@ -28,7 +27,7 @@ const disposalSchema = mongoose.Schema(
 			trim: true,
 			maxlength: 500,
 		},
-		// Who recorded this disposal
+		
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,

@@ -1,4 +1,3 @@
-// frontend/src/components/MaintenanceForm.jsx
 import React, { useState, useEffect } from 'react';
 
 const MaintenanceForm = ({ maintenance, assets, onSubmit, onCancel }) => {
@@ -26,7 +25,7 @@ const MaintenanceForm = ({ maintenance, assets, onSubmit, onCancel }) => {
 				notes: maintenance.notes || '',
 			});
 		} else {
-			// Reset form for new maintenance
+			
 			setFormData({
 				asset: '', maintenanceDate: '', type: 'Repair', description: '', cost: 0,
 				performedBy: 'Internal IT', status: 'Scheduled', notes: '',

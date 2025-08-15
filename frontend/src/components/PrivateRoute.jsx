@@ -1,4 +1,3 @@
-// frontend/src/components/PrivateRoute.jsx
 import React, { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -7,7 +6,7 @@ const PrivateRoute = () => {
 	const { user, loading } = useAuth();
 
 	if (loading) {
-		return <div>Loading authentication...</div>; // Or a spinner
+		return <div>Loading authentication...</div>; 
 	}
 
 	return user ? <Outlet /> : <Navigate to="/login" replace />;

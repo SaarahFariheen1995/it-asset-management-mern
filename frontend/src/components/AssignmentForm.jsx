@@ -1,4 +1,3 @@
-// frontend/src/components/AssignmentForm.jsx
 import React, { useState, useEffect } from 'react';
 
 const AssignmentForm = ({ assignment, assets, users, onSubmit, onCancel }) => {
@@ -22,7 +21,6 @@ const AssignmentForm = ({ assignment, assets, users, onSubmit, onCancel }) => {
 				notes: assignment.notes || '',
 			});
 		} else {
-			// Reset form for new assignment
 			setFormData({
 				asset: '', assignedTo: '', assignmentDate: '', returnDate: '',
 				status: 'Assigned', notes: '',

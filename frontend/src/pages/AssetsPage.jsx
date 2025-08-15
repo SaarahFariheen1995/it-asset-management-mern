@@ -1,17 +1,16 @@
-// frontend/src/pages/AssetsPage.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { useAuth } from '../context/AuthContext';
 import assetService from '../services/assetService';
-import userService from '../services/userService'; // Assuming you have a userService to get all users
-import AssetForm from '../components/AssetForm'; // We'll create this
-import AssetList from '../components/AssetList'; // We'll create this
+import userService from '../services/userService';
+import AssetForm from '../components/AssetForm'; 
+import AssetList from '../components/AssetList';
 import { useNavigate } from 'react-router-dom';
 
 const AssetsPage = () => {
 	const { user } = useAuth();
 	const navigate = useNavigate();
 	const [assets, setAssets] = useState([]);
-	const [users, setUsers] = useState([]); // For assigning assets
+	const [users, setUsers] = useState([]); 
 	const [editingAsset, setEditingAsset] = useState(null);
 	const [showForm, setShowForm] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -42,18 +41,11 @@ const AssetsPage = () => {
 
 	const fetchUsers = async () => {
 		try {
-			// You might need to create a userService.js and a backend route for getting all users
-			// For now, let's assume a simple endpoint or mock data
-			// If your backend doesn't have a /api/users endpoint for all users, you'll need to add one.
-			// Example: const allUsers = await userService.getAllUsers(user.token);
-			// For simplicity, if you don't have a userService, you can mock it or fetch only assigned users.
-			// For now, we'll assume a basic userService exists or you'll implement it.
-			// If not, you can skip populating the dropdown for assignedTo or fetch users on demand.
-			const allUsers = await userService.getAllUsers(user.token); // This service needs to be created
+			const allUsers = await userService.getAllUsers(user.token);
 			setUsers(allUsers);
 		} catch (err) {
 			console.error('Failed to fetch users:', err);
-			// Not critical to stop asset display, but log the error
+			
 		}
 	};
 
@@ -71,7 +63,7 @@ const AssetsPage = () => {
 		if (window.confirm('Are you sure you want to delete this asset?')) {
 			try {
 				await assetService.deleteAsset(id, user.token);
-				fetchAssets(); // Refresh list
+				fetchAssets();
 			} catch (err) {
 				console.error('Failed to delete asset:', err);
 				setError('Failed to delete asset. It might be linked to other records.');
@@ -88,7 +80,7 @@ const AssetsPage = () => {
 			}
 			setShowForm(false);
 			setEditingAsset(null);
-			fetchAssets(); // Refresh list
+			fetchAssets(); 
 		} catch (err) {
 			console.error('Failed to save asset:', err);
 			setError(`Failed to save asset: ${err.response?.data?.message || err.message}`);
@@ -108,7 +100,7 @@ const AssetsPage = () => {
 			{showForm && (
 				<AssetForm
 					asset={editingAsset}
-					users={users} // Pass users to the form for assignment dropdown
+					users={users} 
 					onSubmit={handleFormSubmit}
 					onCancel={() => setShowForm(false)}
 				/>
