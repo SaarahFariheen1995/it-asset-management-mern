@@ -1,10 +1,9 @@
-// frontend/src/components/Navbar.jsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // Make sure you're using useAuth here
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
-	const { user, logout } = useAuth(); // Use the useAuth hook
+	const { user, logout } = useAuth();
 	const navigate = useNavigate();
 
 	const onLogout = () => {

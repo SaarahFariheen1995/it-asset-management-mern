@@ -1,4 +1,3 @@
-//backend/models/Assignment.js
 const mongoose = require('mongoose');
 
 const assignmentSchema = mongoose.Schema(
@@ -6,12 +5,12 @@ const assignmentSchema = mongoose.Schema(
 		asset: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: [true, 'Please specify the asset being assigned'],
-			ref: 'Asset', // References the Asset model
+			ref: 'Asset',
 		},
 		assignedTo: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: [true, 'Please specify the user to whom the asset is assigned'],
-			ref: 'User', // References the User model
+			ref: 'User', 
 		},
 		assignmentDate: {
 			type: Date,
@@ -19,7 +18,7 @@ const assignmentSchema = mongoose.Schema(
 		},
 		returnDate: {
 			type: Date,
-			default: null, // Null if not yet returned
+			default: null,
 		},
 		status: {
 			type: String,
@@ -31,7 +30,7 @@ const assignmentSchema = mongoose.Schema(
 			trim: true,
 			maxlength: 500,
 		},
-		// Who recorded this assignment
+		
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,

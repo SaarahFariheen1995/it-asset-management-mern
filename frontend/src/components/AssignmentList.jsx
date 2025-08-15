@@ -1,4 +1,3 @@
-// frontend/src/components/AssignmentList.jsx
 import React from 'react';
 
 const AssignmentList = ({ assignments, onEdit, onDelete }) => {

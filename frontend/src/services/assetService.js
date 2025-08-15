@@ -1,9 +1,7 @@
-//frontend/src/services/assetService.js
-import axios from '../axiosConfig'; // Your configured axios instance
+import axios from '../axiosConfig';
 
 const API_URL = '/api/assets/';
 
-// Create new asset
 const createAsset = async (assetData, token) => {
 	const config = {
 		headers: {
@@ -14,7 +12,6 @@ const createAsset = async (assetData, token) => {
 	return response.data;
 };
 
-// Get all assets
 const getAssets = async (token) => {
 	const config = {
 		headers: {
@@ -25,7 +22,6 @@ const getAssets = async (token) => {
 	return response.data;
 };
 
-// Get single asset
 const getAssetById = async (assetId, token) => {
 	const config = {
 		headers: {
@@ -36,7 +32,6 @@ const getAssetById = async (assetId, token) => {
 	return response.data;
 };
 
-// Update asset
 const updateAsset = async (assetId, assetData, token) => {
 	const config = {
 		headers: {
@@ -47,7 +42,6 @@ const updateAsset = async (assetId, assetData, token) => {
 	return response.data;
 };
 
-// Delete asset
 const deleteAsset = async (assetId, token) => {
 	const config = {
 		headers: {

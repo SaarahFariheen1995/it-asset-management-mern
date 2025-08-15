@@ -1,8 +1,7 @@
-// frontend/src/pages/MaintenancePage.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { useAuth } from '../context/AuthContext';
 import maintenanceService from '../services/maintenanceService';
-import assetService from '../services/assetService'; // To get list of assets for dropdown
+import assetService from '../services/assetService';
 import MaintenanceForm from '../components/MaintenanceForm';
 import MaintenanceList from '../components/MaintenanceList';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +10,7 @@ const MaintenancePage = () => {
 	const { user } = useAuth();
 	const navigate = useNavigate();
 	const [maintenances, setMaintenances] = useState([]);
-	const [assets, setAssets] = useState([]); // For asset selection in form
+	const [assets, setAssets] = useState([]);
 	const [editingMaintenance, setEditingMaintenance] = useState(null);
 	const [showForm, setShowForm] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -63,7 +62,7 @@ const MaintenancePage = () => {
 		if (window.confirm('Are you sure you want to delete this maintenance record?')) {
 			try {
 				await maintenanceService.deleteMaintenance(id, user.token);
-				fetchMaintenances(); // Refresh list
+				fetchMaintenances();
 			} catch (err) {
 				console.error('Failed to delete maintenance record:', err);
 				setError('Failed to delete maintenance record. Please try again.');
@@ -80,7 +79,7 @@ const MaintenancePage = () => {
 			}
 			setShowForm(false);
 			setEditingMaintenance(null);
-			fetchMaintenances(); // Refresh list
+			fetchMaintenances(); 
 		} catch (err) {
 			console.error('Failed to save maintenance record:', err);
 			setError(`Failed to save maintenance record: ${err.response?.data?.message || err.message}`);
@@ -100,7 +99,7 @@ const MaintenancePage = () => {
 			{showForm && (
 				<MaintenanceForm
 					maintenance={editingMaintenance}
-					assets={assets} // Pass assets to the form
+					assets={assets}
 					onSubmit={handleFormSubmit}
 					onCancel={() => setShowForm(false)}
 				/>

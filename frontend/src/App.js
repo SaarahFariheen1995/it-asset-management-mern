@@ -1,16 +1,13 @@
-//frontend/src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext'; // Make sure AuthProvider is imported
+import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
 
-// Import your pages
 import LoginPage from './pages/Login';
-import RegisterPage from './pages/Register'; // <-- Make sure this is imported
+import RegisterPage from './pages/Register';
 import ProfilePage from './pages/Profile';
 
-// Import new pages
 import AssetsPage from './pages/AssetsPage';
 import DisposalsPage from './pages/DisposalsPage';
 import MaintenancePage from './pages/MaintenancePage';

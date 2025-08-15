@@ -1,26 +1,24 @@
-// frontend/src/pages/Register.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // Import the useAuth hook
+import { useAuth } from '../context/AuthContext';
 
 const RegisterPage = () => {
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
 		password: '',
-		password2: '', // For password confirmation
+		password2: '',
 	});
-	const [message, setMessage] = useState(''); // For displaying success or error messages
+	const [message, setMessage] = useState('');
 	const { name, email, password, password2 } = formData;
 
 
-	const { user, register, logout } = useAuth(); // Get user state and register function from context
+	const { user, register, logout } = useAuth();
 	const navigate = useNavigate();
 
-	// Redirect if user is already logged in
 	useEffect(() => {
 		if (user) {
-			navigate('/'); // Redirect to home/dashboard if already logged in
+			navigate('/');
 		}
 	}, [user, navigate]);
 
@@ -43,13 +41,11 @@ const RegisterPage = () => {
 			await register(name, email, password);
 			logout();
 			setMessage('Registration successful! Redirecting to login...');
-			// Give a moment for the user to see the success message, then navigate
 			setTimeout(() => {
-				navigate('/login'); // Or navigate('/') if you want to auto-login and go to dashboard
+				navigate('/login');
 			}, 1500);
 		} catch (error) {
 			console.error('RegisterForm: Error caught from register function:', error);
-			// The register function in AuthContext should throw an error with a message
 			setMessage(error.response?.data?.message || 'Registration failed. Please try again.');
 		}
 	};

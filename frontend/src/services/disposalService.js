@@ -1,4 +1,3 @@
-//frontend/src/services/disposalService.js
 import axios from '../axiosConfig';
 
 const API_URL = '/api/disposals/';

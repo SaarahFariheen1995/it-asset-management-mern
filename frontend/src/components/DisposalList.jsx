@@ -1,4 +1,3 @@
-// frontend/src/components/DisposalList.jsx
 import React from 'react';
 
 const DisposalList = ({ disposals, onEdit, onDelete }) => {

@@ -1,4 +1,3 @@
-// frontend/src/components/AssetList.jsx
 import React from 'react';
 
 const AssetList = ({ assets, onEdit, onDelete }) => {

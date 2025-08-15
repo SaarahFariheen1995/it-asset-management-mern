@@ -4,20 +4,18 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const [formData, setFormData] = useState({ email: '', password: '' });
-	const { login } = useAuth(); // Get the login function from AuthContext
+	const { login } = useAuth(); 
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
-			// Call the login function from AuthContext, passing email and password
 			await login(formData.email, formData.password);
-			navigate('/'); // Navigate to the home page (AssetsPage) after successful login
+			navigate('/');
 		} catch (error) {
-			// The error message should ideally come from AuthContext or be more specific
 			alert(' Login failed. Please check your credentials.');
-			console.error('Login error:', error); // Log the actual error for debugging
+			console.error('Login error:', error);
 		}
 	};
 
