@@ -1,22 +1,48 @@
+//frontend/src/App.js
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext'; // Make sure AuthProvider is imported
 import Navbar from './components/Navbar';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import Tasks from './pages/Tasks';
+import PrivateRoute from './components/PrivateRoute';
+
+// Import your pages
+import LoginPage from './pages/Login';
+import RegisterPage from './pages/Register'; // <-- Make sure this is imported
+import ProfilePage from './pages/Profile';
+
+// Import new pages
+import AssetsPage from './pages/AssetsPage';
+import DisposalsPage from './pages/DisposalsPage';
+import MaintenancePage from './pages/MaintenancePage';
+import AssignmentsPage from './pages/AssignmentsPage';
 
 function App() {
-  return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/tasks" element={<Tasks />} />
-      </Routes>
-    </Router>
-  );
+	return (
+		<Router>
+			<AuthProvider>
+				<Navbar />
+				<div className="container mt-4">
+					<Routes>
+						{/* Public Routes - accessible without login */}
+						<Route path="/login" element={<LoginPage />} />
+						<Route path="/register" element={<RegisterPage />} /> {/* <-- THIS IS THE KEY ROUTE */}
+
+						{/* Protected Routes - require login */}
+						<Route path="/" element={<PrivateRoute />}>
+							<Route index element={<AssetsPage />} /> {/* Default landing page after login, using 'index' */}
+							<Route path="/profile" element={<ProfilePage />} />
+
+							{/* New IT Asset Management Routes */}
+							<Route path="/assets" element={<AssetsPage />} />
+							<Route path="/disposals" element={<DisposalsPage />} />
+							<Route path="/maintenance" element={<MaintenancePage />} />
+							<Route path="/assignments" element={<AssignmentsPage />} />
+						</Route>
+					</Routes>
+				</div>
+			</AuthProvider>
+		</Router>
+	);
 }
 
 export default App;

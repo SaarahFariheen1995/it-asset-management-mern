@@ -1,4 +1,4 @@
-// config/db.js
+//config/db.js
 const mongoose = require("mongoose");
 
 // Set strictQuery explicitly to suppress the warning
@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);  // Remove deprecated options
-    console.log("MongoDB connected successfully");
+    console.log('MongoDB connected successfully": ${conn.connection.host}');
   } catch (error) {
     console.error("MongoDB connection error:", error.message);
     process.exit(1);

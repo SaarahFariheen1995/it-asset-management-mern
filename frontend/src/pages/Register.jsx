@@ -1,53 +1,139 @@
-import { useState } from 'react';
+// frontend/src/pages/Register.jsx
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../axiosConfig';
+import { useAuth } from '../context/AuthContext'; // Import the useAuth hook
 
-const Register = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-  const navigate = useNavigate();
+const RegisterPage = () => {
+	const [formData, setFormData] = useState({
+		name: '',
+		email: '',
+		password: '',
+		password2: '', // For password confirmation
+	});
+	const [message, setMessage] = useState(''); // For displaying success or error messages
+	const { name, email, password, password2 } = formData;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axiosInstance.post('/api/auth/register', formData);
-      alert('Registration successful. Please log in.');
-      navigate('/login');
-    } catch (error) {
-      alert('Registration failed. Please try again.');
-    }
-  };
 
-  return (
-    <div className="max-w-md mx-auto mt-20">
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded">
-        <h1 className="text-2xl font-bold mb-4 text-center">Register</h1>
-        <input
-          type="text"
-          placeholder="Name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <button type="submit" className="w-full bg-green-600 text-white p-2 rounded">
-          Register
-        </button>
-      </form>
-    </div>
-  );
+	const { user, register, logout } = useAuth(); // Get user state and register function from context
+	const navigate = useNavigate();
+
+	// Redirect if user is already logged in
+	useEffect(() => {
+		if (user) {
+			navigate('/'); // Redirect to home/dashboard if already logged in
+		}
+	}, [user, navigate]);
+
+	const onChange = (e) => {
+		setFormData((prevState) => ({
+			...prevState,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
+	const onSubmit = async (e) => {
+		e.preventDefault();
+
+		if (password !== password2) {
+			setMessage('Passwords do not match');
+			return;
+		}
+
+		try {
+			await register(name, email, password);
+			logout();
+			setMessage('Registration successful! Redirecting to login...');
+			// Give a moment for the user to see the success message, then navigate
+			setTimeout(() => {
+				navigate('/login'); // Or navigate('/') if you want to auto-login and go to dashboard
+			}, 1500);
+		} catch (error) {
+			console.error('RegisterForm: Error caught from register function:', error);
+			// The register function in AuthContext should throw an error with a message
+			setMessage(error.response?.data?.message || 'Registration failed. Please try again.');
+		}
+	};
+
+	return (
+		<div className="container mt-5">
+			<div className="row justify-content-center">
+				<div className="col-md-6 col-lg-5">
+					<div className="card shadow-sm">
+						<div className="card-body p-4">
+							<h2 className="card-title text-center mb-4">Register</h2>
+							{message && (
+								<div className={`alert ${message.includes('successful') ? 'alert-success' : 'alert-danger'}`} role="alert">
+									{message}
+								</div>
+							)}
+							<form onSubmit={onSubmit}>
+								<div className="mb-3">
+									<label htmlFor="name" className="form-label">Name</label>
+									<input
+										type="text"
+										className="form-control"
+										id="name"
+										name="name"
+										value={name}
+										onChange={onChange}
+										placeholder="Enter your name"
+										required
+									/>
+								</div>
+								<div className="mb-3">
+									<label htmlFor="email" className="form-label">Email address</label>
+									<input
+										type="email"
+										className="form-control"
+										id="email"
+										name="email"
+										value={email}
+										onChange={onChange}
+										placeholder="Enter your email"
+										required
+									/>
+								</div>
+								<div className="mb-3">
+									<label htmlFor="password" className="form-label">Password</label>
+									<input
+										type="password"
+										className="form-control"
+										id="password"
+										name="password"
+										value={password}
+										onChange={onChange}
+										placeholder="Enter password"
+										required
+									/>
+								</div>
+								<div className="mb-4">
+									<label htmlFor="password2" className="form-label">Confirm Password</label>
+									<input
+										type="password"
+										className="form-control"
+										id="password2"
+										name="password2"
+										value={password2}
+										onChange={onChange}
+										placeholder="Confirm password"
+										required
+									/>
+								</div>
+								<div className="d-grid">
+									<button type="submit" className="btn btn-primary btn-lg">
+										Register
+									</button>
+								</div>
+							</form>
+							<p className="text-center mt-3">
+								Already have an account? <a href="/login">Login here</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
 
-export default Register;
+export default RegisterPage;
