@@ -1,4 +1,3 @@
-// frontend/src/components/MaintenanceList.jsx
 import React from 'react';
 
 const MaintenanceList = ({ maintenances, onEdit, onDelete }) => {

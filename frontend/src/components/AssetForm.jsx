@@ -1,4 +1,3 @@
-// frontend/src/components/AssetForm.jsx
 import React, { useState, useEffect } from 'react';
 
 const AssetForm = ({ asset, users, onSubmit, onCancel }) => {
@@ -10,7 +9,7 @@ const AssetForm = ({ asset, users, onSubmit, onCancel }) => {
 		warrantyEndDate: '',
 		status: 'Available',
 		location: '',
-		assignedTo: '', // User ID
+		assignedTo: '', 
 		notes: '',
 	});
 
@@ -24,11 +23,11 @@ const AssetForm = ({ asset, users, onSubmit, onCancel }) => {
 				warrantyEndDate: asset.warrantyEndDate ? new Date(asset.warrantyEndDate).toISOString().split('T')[0] : '',
 				status: asset.status || 'Available',
 				location: asset.location || '',
-				assignedTo: asset.assignedTo ? asset.assignedTo._id : '', // Pre-select if assigned
+				assignedTo: asset.assignedTo ? asset.assignedTo._id : '',
 				notes: asset.notes || '',
 			});
 		} else {
-			// Reset form for new asset
+			
 			setFormData({
 				name: '', type: '', serialNumber: '', purchaseDate: '', warrantyEndDate: '',
 				status: 'Available', location: '', assignedTo: '', notes: '',

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from '../axiosConfig'; // Your configured axios instance
+import axios from '../axiosConfig';
 
 const AuthContext = createContext();
 
@@ -15,16 +15,16 @@ export const AuthProvider = ({ children }) => {
 		setLoading(false);
 	}, []);
 
-	const login = async (email, password) => { // <-- Takes email and password
+	const login = async (email, password) => { 
 		try {
-			const response = await axios.post('/api/users/login', { email, password }); // <-- Makes the API call
+			const response = await axios.post('/api/users/login', { email, password });
 			const userData = response.data;
 			localStorage.setItem('user', JSON.stringify(userData));
 			setUser(userData);
 			return userData;
 		} catch (error) {
 			console.error('Login failed:', error.response?.data?.message || error.message);
-			throw error; // Re-throw the error for Login.jsx to catch
+			throw error; 
 		}
 	};
 
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 		console.log('AuthContext: register function called.');
 		try {
 			console.log('AuthContext: Making axios POST request to /api/users/register');
-			const response = await axios.post('/api/users/register', {name, email, password}); // <-- THIS CALL
+			const response = await axios.post('/api/users/register', {name, email, password});
 			console.log('AuthContext: Registration successful, response:', response.data);
 			const userData = response.data;
 			localStorage.setItem('user', JSON.stringify(userData));
