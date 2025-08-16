@@ -23,10 +23,11 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/users', authRoutes);
 
-
+if(require.main==module){
     connectDB();
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log('Server running on port ${PORT}'));
+    const PORT = process.env.PORT || 5001;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
 
 app.use('/api/assets', assetRoutes);
 app.use('/api/disposals', disposalRoutes);
