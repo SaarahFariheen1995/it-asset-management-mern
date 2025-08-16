@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import assignmentService from '../services/assignmentService';
 import assetService from '../services/assetService'; 
@@ -18,17 +18,7 @@ const AssignmentsPage = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	useEffect(() => {
-		if (!user) {
-			navigate('/login');
-			return;
-		}
-		fetchAssignments();
-		fetchAssetsForDropdown();
-		fetchUsersForDropdown();
-	}, [user, navigate]);
-
-	const fetchAssignments = async () => {
+	const fetchAssignments = useCallback(async () => {
 		try {
 			setLoading(true);
 			const data = await assignmentService.getAssignments(user.token);
@@ -40,25 +30,35 @@ const AssignmentsPage = () => {
 		} finally {
 			setLoading(false);
 		}
-	};
+	},[user.token]);
 
-	const fetchAssetsForDropdown = async () => {
+	const fetchAssetsForDropdown = useCallback(async () => {
 		try {
 			const allAssets = await assetService.getAssets(user.token);
 			setAssets(allAssets);
 		} catch (err) {
 			console.error('Failed to fetch assets for assignment dropdown:', err);
 		}
-	};
+	},[user.token]);
 
-	const fetchUsersForDropdown = async () => {
+	const fetchUsersForDropdown = useCallback(async () => {
 		try {
 			const allUsers = await userService.getAllUsers(user.token);
 			setUsers(allUsers);
 		} catch (err) {
 			console.error('Failed to fetch users for assignment dropdown:', err);
 		}
-	};
+	},[user.token]);
+
+	useEffect(() => {
+		if (!user) {
+			navigate('/login');
+			return;
+		}
+		fetchAssignments();
+		fetchAssetsForDropdown();
+		fetchUsersForDropdown();
+}, [user, navigate, fetchAssignments, fetchAssetsForDropdown, fetchUsersForDropdown]);
 
 	const handleAddAssignment = () => {
 		setEditingAssignment(null);

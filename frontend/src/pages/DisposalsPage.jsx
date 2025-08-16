@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import disposalService from '../services/disposalService';
 import assetService from '../services/assetService'; 
@@ -16,16 +16,7 @@ const DisposalsPage = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	useEffect(() => {
-		if (!user) {
-			navigate('/login');
-			return;
-		}
-		fetchDisposals();
-		fetchAssetsForDropdown();
-	}, [user, navigate]);
-
-	const fetchDisposals = async () => {
+	const fetchDisposals = useCallback(async () => {
 		try {
 			setLoading(true);
 			const data = await disposalService.getDisposals(user.token);
@@ -37,16 +28,25 @@ const DisposalsPage = () => {
 		} finally {
 			setLoading(false);
 		}
-	};
+	},[user.token]);
 
-	const fetchAssetsForDropdown = async () => {
+	const fetchAssetsForDropdown = useCallback(async () => {
 		try {
 			const allAssets = await assetService.getAssets(user.token);
 			setAssets(allAssets);
 		} catch (err) {
 			console.error('Failed to fetch assets for disposal dropdown:', err);
 		}
-	};
+	},[user.token]);
+	
+	useEffect(() => {
+		if (!user) {
+			navigate('/login');
+			return;
+		}
+		fetchDisposals();
+		fetchAssetsForDropdown();
+	}, [user, navigate, fetchDisposals, fetchAssetsForDropdown]);
 
 	const handleAddDisposal = () => {
 		setEditingDisposal(null);

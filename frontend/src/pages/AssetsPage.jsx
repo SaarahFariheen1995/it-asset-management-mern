@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import assetService from '../services/assetService';
 import userService from '../services/userService';
@@ -16,16 +16,8 @@ const AssetsPage = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	useEffect(() => {
-		if (!user) {
-			navigate('/login');
-			return;
-		}
-		fetchAssets();
-		fetchUsers();
-	}, [user, navigate]);
 
-	const fetchAssets = async () => {
+	const fetchAssets = useCallback(async () => {
 		try {
 			setLoading(true);
 			const data = await assetService.getAssets(user.token);
@@ -37,9 +29,9 @@ const AssetsPage = () => {
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, [user.token]);
 
-	const fetchUsers = async () => {
+	const fetchUsers = useCallback(async () => {
 		try {
 			const allUsers = await userService.getAllUsers(user.token);
 			setUsers(allUsers);
@@ -47,7 +39,16 @@ const AssetsPage = () => {
 			console.error('Failed to fetch users:', err);
 			
 		}
-	};
+	},[user.token]);
+
+	useEffect(() => {
+	if (!user) {
+		navigate('/login');
+		return;
+	}
+	fetchAssets();
+	fetchUsers();
+}, [user, navigate, fetchUsers, fetchAssets]);
 
 	const handleAddAsset = () => {
 		setEditingAsset(null);
