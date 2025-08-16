@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import maintenanceService from '../services/maintenanceService';
 import assetService from '../services/assetService';
@@ -16,16 +16,8 @@ const MaintenancePage = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	useEffect(() => {
-		if (!user) {
-			navigate('/login');
-			return;
-		}
-		fetchMaintenances();
-		fetchAssetsForDropdown();
-	}, [user, navigate]);
 
-	const fetchMaintenances = async () => {
+	const fetchMaintenances = useCallback(async () => {
 		try {
 			setLoading(true);
 			const data = await maintenanceService.getMaintenances(user.token);
@@ -37,16 +29,25 @@ const MaintenancePage = () => {
 		} finally {
 			setLoading(false);
 		}
-	};
+	},[user.token]);
 
-	const fetchAssetsForDropdown = async () => {
+	const fetchAssetsForDropdown = useCallback(async () => {
 		try {
 			const allAssets = await assetService.getAssets(user.token);
 			setAssets(allAssets);
 		} catch (err) {
 			console.error('Failed to fetch assets for maintenance dropdown:', err);
 		}
-	};
+	},[user.token]);
+
+useEffect(() => {
+		if (!user) {
+			navigate('/login');
+			return;
+		}
+		fetchMaintenances();
+		fetchAssetsForDropdown();
+	}, [user, navigate, fetchAssetsForDropdown, fetchMaintenances]);
 
 	const handleAddMaintenance = () => {
 		setEditingMaintenance(null);
