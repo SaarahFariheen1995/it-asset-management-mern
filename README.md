@@ -84,7 +84,6 @@ We will send you an email to choose a Real-World project. If you face any diffic
 * Public URL of your project.
 * Provide a project-specific username and password if we need to access your dashboard.
 
-
 **Assessment Criteria:**
 
 * Clarity and completeness of Jira board and SysML models.
