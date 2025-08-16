@@ -84,7 +84,6 @@ We will send you an email to choose a Real-World project. If you face any diffic
 * Public URL of your project.
 * Provide a project-specific username and password if we need to access your dashboard.
 
----
 
 **Assessment Criteria:**
 
@@ -92,4 +91,3 @@ We will send you an email to choose a Real-World project. If you face any diffic
 * Adherence to Git best practices and practical contributions.
 * Successful implementation, deploymentand CI/CD pipeline.
 * Problem-solving skills and the ability to go beyond basic requirements.
-
