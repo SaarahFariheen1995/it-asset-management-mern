@@ -130,3 +130,4 @@ The project is organized into two main directories: backend and frontend.
   *   *Username:* saarah10@gmail.com
   *   *Password:* 1234
 
+---
