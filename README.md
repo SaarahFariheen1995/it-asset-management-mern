@@ -129,5 +129,3 @@ The project is organized into two main directories: backend and frontend.
   *Test Credentials:*
   *   *Username:* saarah10@gmail.com
   *   *Password:* 1234
-
----
